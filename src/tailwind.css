@@ -6,12 +6,49 @@
   :root {
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 
-    color: rgba(255, 255, 255, 0.87);
-    background-color: #242424;
+    @apply bg-neutral-900 text-neutral-100;
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  html, body {
+    @apply w-dvw h-dvh;
+  }
+
+  @media (max-width: 1024px) {
+    html, body {
+      font-size: 1.36719dvw;
+    } 
+  }
+}
+
+@layer components {
+  .input {
+    @apply text-white rounded bg-neutral-900 ring-1 ring-neutral-600 hover:bg-neutral-800 focus-visible:bg-neutral-800 transition-colors outline-none;
+  }
+
+  .animate-appearance {
+    @apply relative;
+  }
+
+  .animate-appearance > * {
+    @apply animate-[url-in_.3s_ease];
+  }
+
+  .dashes {
+    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='30' ry='30' stroke='%23333' stroke-width='1' stroke-dasharray='25%2c 20' stroke-dashoffset='0' stroke-linecap='round'/%3e%3c/svg%3e");
+    border-radius: 30px;
+  }
+
+  @keyframes url-in {
+    0% {
+      @apply absolute opacity-0 bottom-0;
+    }
+    100% {
+      @apply absolute opacity-100 -bottom-4 translate-y-full;
+    }
   }
 }
