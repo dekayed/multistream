@@ -30,7 +30,7 @@ export function Window(props: Props) {
   const windowRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLDivElement>(null);
 
-  const mover = useMover({ boundaries, zIndex, ref: windowRef });
+  const mover = useMover({ id, boundaries, zIndex, ref: windowRef });
   const { src } = useSrc({ url });
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export function Window(props: Props) {
 
   useEffect(() => {
     if (!inputRef.current) return;
-    if (editing) { inputRef.current.textContent = inputValue; }
+    if (editing && !isFavorite) { inputRef.current.textContent = inputValue; }
   }, [editing]);
 
   useEffect(() => {
@@ -54,6 +54,15 @@ export function Window(props: Props) {
   }, []);
 
   const isFavorite = favorites.list.some((f) => f.url === url);
+
+  useEffect(() => {
+    if (!inputRef.current || !editing) return;
+    if (isFavorite) {
+      inputRef.current!.textContent = favorites.list.find((f) => f.url === url)?.name || '';
+      return;
+    }
+    inputRef.current.textContent = url;
+  }, [isFavorite, url, editing]);
 
   return (
     <ContextMenu
@@ -65,6 +74,8 @@ export function Window(props: Props) {
       onSnapToCenter={mover.snapToCenter}
       onResetResize={mover.resetResize}
       onRemove={() => windows.remove(id)}
+      aspectRatioLocked={mover.aspectRatioLocked}
+      onToggleAspectRatioLock={mover.toggleLockAspectRatio}
     >
       <motion.div
         drag
@@ -75,7 +86,9 @@ export function Window(props: Props) {
         initial={{ opacity: 0 }}
         animate={mover.controls}
         exit={{ opacity: 0, scale: 0.9 }}
+        // transformTemplate={mover.transformTemplate}
         transition={{ duration: .3 }}
+        onDragEnd={mover.onDragEnd}
         onMouseDown={() => windows.putOnTop(id)}
         ref={windowRef}
       >
@@ -83,14 +96,14 @@ export function Window(props: Props) {
           {editing && (
             <>
               <motion.div
-                className="absolute inset-0 w-full h-full bg-black bg-opacity-80 rounded-[1.8rem] z-10 flex flex-col items-center justify-center"
+                className="absolute inset-0 w-full h-full bg-black bg-opacity-80 rounded-[1.8rem] z-10 flex flex-col items-center justify-center ring-neutral-900 ring-inset ring-1"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
               >
                 <span
                   role="textbox"
-                  contentEditable
+                  contentEditable={!isFavorite}
                   aria-placeholder="Enter URL"
                   ref={inputRef}
                   className={cn(
@@ -99,9 +112,9 @@ export function Window(props: Props) {
                   )}
                   style={{
                     // @ts-expect-error css var
-                    '--calc': `calc(12px * (var(--width) / 8) / ${inputValue.length})`,
+                    '--calc': `calc(12px * (var(--width) / 8) / ${inputValue?.length || 1})`,
                   }}
-                  onBlur={() => windows.update(id, { url: inputValue })}
+                  onBlur={() => { console.log('blur'); windows.update(id, { url: inputValue }); }}
                   onInput={(e) => {
                     if (e.currentTarget.innerText === '\n') { e.currentTarget.innerText = ''; }
                     setInputValue((e.currentTarget as HTMLDivElement | null)?.textContent || '');
@@ -109,6 +122,7 @@ export function Window(props: Props) {
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       e.currentTarget.blur();
+                      console.log('enter');
                       windows.update(id, { url: inputValue });
                     }
                   }}
@@ -118,9 +132,9 @@ export function Window(props: Props) {
                 drag
                 dragElastic={0}
                 dragMomentum={false}
-                onDragStart={mover.onDragStart}
-                onDragEnd={mover.onDragEnd}
-                onDrag={mover.onDrag}
+                onDragStart={mover.onResizeStart}
+                onDragEnd={mover.onResizeEnd}
+                onDrag={mover.onResize}
 
                 className="bottom-0 right-0 absolute aspect-square w-[clamp(1.9rem,5%,3rem)] cursor-nwse-resize z-20"
                 style={{ transform: 'rotate(-90deg) translateX(-13%) translateY(13%)' }}

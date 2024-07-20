@@ -1,11 +1,11 @@
-import { motion, AnimatePresence } from "framer-motion";
-import { useRef } from "react";
+import { motion, AnimatePresence } from 'framer-motion';
+import { useRef } from 'react';
 
-import { useWindows } from "useWindows";
+import { useWindows } from 'useWindows';
 
-import { Background } from "./background";
-import { Empty } from "./empty";
-import { Window } from "./window";
+import { ContextMenu } from './ctx-menu';
+import { Empty } from './empty';
+import { Window } from './window';
 
 export function Space() {
   const windows = useWindows();
@@ -20,8 +20,8 @@ export function Space() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <Background
-        onAdd={windows.create}
+      <ContextMenu
+        onAdd={(url) => windows.create({ url })}
         isEditing={windows.editing}
         toggleEditing={windows.toggleEditing}
       />

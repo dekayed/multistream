@@ -1,10 +1,14 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren } from 'react';
 
-import { ContextMenu as SCNContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger, ContextMenuCheckboxItem } from "components/ui/context-menu";
-import { DialogTrigger } from "components/ui/dialog";
-import { Favorite } from "useFavorites";
+import { ContextMenu as SCNContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger, ContextMenuCheckboxItem, ContextMenuSeparator } from 'components/ui/context-menu';
+import { DialogTrigger } from 'components/ui/dialog';
+import { getHost } from 'parsers';
+import { getChatUrl } from 'parsers/twitch';
+import twitchChatParser from 'parsers/twitch-chat';
+import { Favorite } from 'useFavorites';
+import { useWindows } from 'useWindows';
 
-import { AddFavoriteDialog } from "./add-favorite";
+import { AddFavoriteDialog } from './add-favorite';
 
 type Props = {
   showResetResize: boolean;
@@ -15,10 +19,18 @@ type Props = {
   onSnapToCenter: () => void;
   onResetResize: () => void;
   onRemove: () => void;
+  aspectRatioLocked?: boolean;
+  onToggleAspectRatioLock?: () => void;
 } & PropsWithChildren
 
 export function ContextMenu(props: Props) {
-  const { showResetResize, url, onSnapToCenter, onResetResize, isFavorite, addFavorite, removeFavorite, onRemove, children } = props;
+  const {
+    showResetResize, url, onSnapToCenter, onResetResize, isFavorite,
+    addFavorite, removeFavorite, onRemove, children,
+    aspectRatioLocked, onToggleAspectRatioLock,
+  } = props;
+
+  const windows = useWindows();
 
   return (
     <AddFavoriteDialog url={url} onSubmit={addFavorite}>
@@ -27,6 +39,14 @@ export function ContextMenu(props: Props) {
           {children}
         </ContextMenuTrigger>
         <ContextMenuContent className="w-64">
+          {getHost(url) === 'twitch' && (
+            <>
+              <ContextMenuItem inset onClick={() => windows.create({ url: twitchChatParser(getChatUrl(url)) })}>
+                Open Twitch Chat
+              </ContextMenuItem>
+              <ContextMenuSeparator />
+            </>
+          )}
           {isFavorite ? (
             <ContextMenuCheckboxItem checked onClick={removeFavorite}>
               Favorite
@@ -35,6 +55,11 @@ export function ContextMenu(props: Props) {
             <DialogTrigger asChild>
               <ContextMenuCheckboxItem>Favorite</ContextMenuCheckboxItem>
             </DialogTrigger>
+          )}
+          {typeof aspectRatioLocked === 'boolean' && (
+            <ContextMenuCheckboxItem checked={aspectRatioLocked} onClick={onToggleAspectRatioLock}>
+              Lock Aspect Ratio
+            </ContextMenuCheckboxItem>
           )}
           <ContextMenuItem inset onClick={onSnapToCenter}>
             Snap to Center

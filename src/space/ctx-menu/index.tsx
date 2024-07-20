@@ -1,8 +1,9 @@
 import {
-  ContextMenu,
+  ContextMenu as SCNContextMenu,
   ContextMenuCheckboxItem,
   ContextMenuContent,
   ContextMenuTrigger,
+  ContextMenuSeparator,
 } from "components/ui/context-menu";
 import { Window } from "useWindows";
 
@@ -15,21 +16,23 @@ type Props = {
   toggleEditing: () => void;
 };
 
-export function Background(props: Props) {
+export function ContextMenu(props: Props) {
   const { onAdd, isEditing, toggleEditing } = props;
 
   return (
-    <ContextMenu>
+    <SCNContextMenu>
       <ContextMenuTrigger>
         <div className="w-full h-full absolute inset-0 z-0" />
       </ContextMenuTrigger>
       <ContextMenuContent className="w-64">
-        <AddStreamItem onAdd={onAdd} />
         <ContextMenuCheckboxItem checked={isEditing} onClick={toggleEditing}>
-          Ediitng Mode
+          Editing Mode
         </ContextMenuCheckboxItem>
+        <ContextMenuSeparator />
+        <AddStreamItem onAdd={onAdd} />
+        <ContextMenuSeparator />
         <FullscreenItem />
       </ContextMenuContent>
-    </ContextMenu>
+    </SCNContextMenu>
   );
 }

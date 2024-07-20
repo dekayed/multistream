@@ -10,7 +10,7 @@ export function useSrc(props: Props) {
   const host = getHost(url);
 
   const src = (() => {
-    if (url === "") return null;
+    if (url === '') return null;
     try {
       if (host && parsers[host]) {
         return parsers[host](url);

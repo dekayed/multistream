@@ -17,6 +17,7 @@ module.exports = {
       { allowConstantExport: true },
     ],
     'semi': ['warn'],
+    'quotes': ['warn', 'single'],
     'import/order': ['warn', {
       'alphabetize': { order: 'asc' },
       'newlines-between': 'always',
