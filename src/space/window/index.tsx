@@ -29,7 +29,7 @@ export function Window(props: Props) {
   const inputRef = useRef<HTMLDivElement>(null);
 
   const mover = useMover({ boundaries, zIndex, ref: windowRef });
-  const src = useSrc({ url });
+  const { src } = useSrc({ url });
 
   useEffect(() => {
     if (!windowRef.current) return;
@@ -141,6 +141,8 @@ export function Window(props: Props) {
         {src && (
           <iframe
             src={src}
+            allow="autoplay; encrypted-media; fullscreen"
+            allowFullScreen
             className={cn(
               "absolute inset-0 w-full h-full aspect-video rounded-[inherit]",
               { 'pointer-events-none': editing },
