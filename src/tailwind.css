@@ -20,6 +20,10 @@
     @apply w-dvw h-dvh;
   }
 
+  .twitch {
+    @apply bg-[#18181b]
+  }
+
   @media (max-width: 1024px) {
     html, body {
       font-size: var(--dynamic-font-size);
