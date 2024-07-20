@@ -1,9 +1,11 @@
 import hosts from "constants/hosts.json";
 
 import twitch from "./twitch";
+import vk from "./vk";
 
 export const parsers = {
-  twitch
+  twitch,
+  vk
 };
 
 export const getHost = (url: string) => {
