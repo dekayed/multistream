@@ -16,7 +16,11 @@ function App() {
 
   return (
     <div className="w-full h-full relative flex items-center justify-center">
-      <Background onAdd={mediaStore.addNewMedia} />
+      <Background
+        onAdd={mediaStore.addNewMedia}
+        isEditing={mediaStore.isEditing}
+        toggleEditing={() => mediaStore.setIsEditing((isEditing) => !isEditing)}
+      />
       <Context.Provider value={mediaStore}>
         <AnimatePresence initial>
           {mediaStore.mediaList.size === 0 ? (

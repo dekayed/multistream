@@ -23,10 +23,19 @@ export function Windows() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <Background onAdd={mediaStore.addNewMedia} />
+      <Background
+        onAdd={mediaStore.addNewMedia}
+        isEditing={mediaStore.isEditing}
+        toggleEditing={() => mediaStore.setIsEditing((isEditing) => !isEditing)}
+      />
       <AnimatePresence>
         {Array.from(mediaStore.mediaList).map((media) => (
-          <Window key={media.id} boundaries={boundariesRef} media={media} />
+          <Window
+            key={media.id}
+            boundaries={boundariesRef}
+            media={media}
+            isEditing={mediaStore.isEditing}
+          />
         ))}
       </AnimatePresence>
     </motion.div>

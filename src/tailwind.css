@@ -12,6 +12,8 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    --dynamic-font-size: 1.36719dvw;
   }
 
   html, body {
@@ -20,7 +22,7 @@
 
   @media (max-width: 1024px) {
     html, body {
-      font-size: 1.36719dvw;
+      font-size: var(--dynamic-font-size);
     } 
   }
 }
