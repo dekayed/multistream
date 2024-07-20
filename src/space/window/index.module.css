@@ -1,0 +1,8 @@
+.input {
+  font-size: clamp(10px, var(--calc), 42px);
+}
+
+.input:empty:not(:focus-visible)::after {
+  content: attr(aria-placeholder);
+  @apply absolute w-full flex items-center justify-center pointer-events-none mx-[-6%] text-[inherit] opacity-20;
+}

@@ -5,7 +5,7 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from "components/ui/context-menu";
-import { useEffect, useState } from "react";
+import { FullscreenItem } from "./fullscreen-item";
 
 type Props = {
   onAdd: () => void;
@@ -16,14 +16,6 @@ type Props = {
 export function Background(props: Props) {
   const { onAdd, isEditing, toggleEditing } = props;
 
-  const [fullscreenElement, setFullscreenElement] = useState<HTMLElement | null>(null);
-
-  useEffect(() => {
-    document.addEventListener('fullscreenchange', () => {
-      setFullscreenElement(document.fullscreenElement as HTMLElement);
-    });
-  }, []);
-
   return (
     <ContextMenu>
       <ContextMenuTrigger>
@@ -33,21 +25,10 @@ export function Background(props: Props) {
         <ContextMenuItem inset onClick={onAdd}>
           Add a Stream
         </ContextMenuItem>
-        {/* <ContextMenuCheckboxItem checked>
-          Rounded Windows
-        </ContextMenuCheckboxItem> */}
         <ContextMenuCheckboxItem checked={isEditing} onClick={toggleEditing}>
           Ediitng Mode
         </ContextMenuCheckboxItem>
-        {fullscreenElement === document.documentElement ? (
-          <ContextMenuItem inset onClick={() => document.exitFullscreen()}>
-            Exit Fullscreen
-          </ContextMenuItem>
-        ) : (
-          <ContextMenuItem inset onClick={() => document.documentElement.requestFullscreen()}>
-            Go Fullscreen
-          </ContextMenuItem>
-        )}
+        <FullscreenItem />
       </ContextMenuContent>
     </ContextMenu>
   );

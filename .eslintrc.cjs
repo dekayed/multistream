@@ -5,6 +5,8 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
@@ -14,6 +16,26 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
-    'semi': ['warn']
+    'semi': ['warn'],
+    'import/order': ['warn', {
+      'alphabetize': { order: 'asc' },
+      'newlines-between': 'always',
+      'groups': [
+        'builtin',
+        'external',
+        'internal',
+        'parent',
+        'sibling',
+        'index',
+      ]
+    }],
   },
+  settings: {
+    'import/resolver': {
+      "typescript": true
+    },
+    // 'import/parsers': {
+    //   '@typescript-eslint/parser': ['.ts', '.tsx']
+    // },
+  }
 }
