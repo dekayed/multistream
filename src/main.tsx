@@ -1,12 +1,13 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { RouterProvider } from 'react-router-dom';
 
-import { Space } from 'space';
+import { router } from 'router';
 
 import './tailwind.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Space />
+    <RouterProvider router={router} />
   </StrictMode>,
 );
