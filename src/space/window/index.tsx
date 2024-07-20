@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { RefObject, useEffect, useRef, useState } from "react";
 
 
+import { useFavorites } from "useFavorites";
 import { useWindows, type Window as WindowType } from "useWindows";
 import { cn } from "utils";
 
@@ -24,6 +25,7 @@ export function Window(props: Props) {
   const [inputValue, setInputValue] = useState(url);
 
   const windows = useWindows();
+  const favorites = useFavorites();
 
   const windowRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLDivElement>(null);
@@ -51,9 +53,15 @@ export function Window(props: Props) {
     inputRef.current.focus();
   }, []);
 
+  const isFavorite = favorites.list.some((f) => f.url === url);
+
   return (
     <ContextMenu
       showResetResize={mover.resized}
+      isFavorite={isFavorite}
+      url={url}
+      addFavorite={(name) => favorites.addFavorite({ name, url })}
+      removeFavorite={() => favorites.removeFavorite(url)}
       onSnapToCenter={mover.snapToCenter}
       onResetResize={mover.resetResize}
       onRemove={() => windows.remove(id)}
@@ -75,7 +83,7 @@ export function Window(props: Props) {
           {editing && (
             <>
               <motion.div
-                className="absolute inset-0 w-full h-full bg-black bg-opacity-80 rounded-[inherit] z-10 flex flex-col items-center justify-center"
+                className="absolute inset-0 w-full h-full bg-black bg-opacity-80 rounded-[1.8rem] z-10 flex flex-col items-center justify-center"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -114,13 +122,13 @@ export function Window(props: Props) {
                 onDragEnd={mover.onDragEnd}
                 onDrag={mover.onDrag}
 
-                // initial={{ rotate: '-90deg' }}
                 className="bottom-0 right-0 absolute aspect-square w-[clamp(1.9rem,5%,3rem)] cursor-nwse-resize z-20"
                 style={{ transform: 'rotate(-90deg) translateX(-13%) translateY(13%)' }}
                 transformTemplate={() => `rotate(-90deg) translateX(-13%) translateY(13%)`}
 
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                whileHover={{ opacity: 1 }}
+                whileDrag={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
 
                 viewBox="0 0 91 91"

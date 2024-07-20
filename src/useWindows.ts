@@ -36,7 +36,7 @@ export const useWindows = create(
     (set) => ({
       stack: stack as Array<Window>,
       editing: !stack.length,
-      create: () => set((state) => ({ stack: [...state.stack, new Window('')] })),
+      create: (url?: Window['url']) => set((state) => ({ stack: [...state.stack, new Window(url || '')] })),
       update: (id, params) => set((state) => ({ stack: state.stack.map((media) => media.id === id ? ({ ...media, ...params }) : media) })),
       remove: (id) => set((state) => ({ stack: state.stack.filter((media) => media.id !== id) })),
       putOnTop: (id) => set((state) => ({ stack: state.stack.sort((a, b) => a.id === id ? 1 : b.id === id ? -1 : 0) })),
