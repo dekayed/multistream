@@ -41,7 +41,7 @@ export function ContextMenu(props: Props) {
         <ContextMenuContent className="w-64">
           {getHost(url) === 'twitch' && (
             <>
-              <ContextMenuItem inset onClick={() => windows.create({ url: twitchChatParser(getChatUrl(url)) })}>
+              <ContextMenuItem inset onClick={() => windows.create({ url: twitchChatParser(getChatUrl(url)), width: 25, height: 95 })}>
                 Open Twitch Chat
               </ContextMenuItem>
               <ContextMenuSeparator />

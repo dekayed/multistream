@@ -1,16 +1,16 @@
 
-import { AnimatePresence, motion } from "framer-motion";
-import { RefObject, useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from 'framer-motion';
+import { RefObject, useEffect, useRef, useState } from 'react';
 
 
-import { useFavorites } from "useFavorites";
-import { useWindows, type Window as WindowType } from "useWindows";
-import { cn } from "utils";
+import { useFavorites } from 'useFavorites';
+import { useWindows, type Window as WindowType } from 'useWindows';
+import { cn } from 'utils';
 
-import { ContextMenu } from "./ctx-menu";
-import s from "./index.module.css";
-import { useMover } from "./useMover";
-import { useSrc } from "./useSrc";
+import { ContextMenu } from './ctx-menu';
+import s from './index.module.css';
+import { useMover } from './useMover';
+import { useSrc } from './useSrc';
 
 
 type Props = {
@@ -96,7 +96,7 @@ export function Window(props: Props) {
           {editing && (
             <>
               <motion.div
-                className="absolute inset-0 w-full h-full bg-black bg-opacity-80 rounded-[1.8rem] z-10 flex flex-col items-center justify-center ring-neutral-900 ring-inset ring-1"
+                className="absolute inset-0 w-full h-full bg-black bg-opacity-80 rounded-[1.8rem] z-10 flex flex-col items-center justify-center ring-neutral-700 ring-inset ring-1"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -108,7 +108,7 @@ export function Window(props: Props) {
                   ref={inputRef}
                   className={cn(
                     s.input,
-                    "relative w-full whitespace-pre-wrap cursor-text outline-none border-none bg-transparent text-white text-center font-extrabold px-[6%]"
+                    'relative w-full whitespace-pre-wrap cursor-text outline-none border-none bg-transparent text-white text-center font-extrabold px-[6%]'
                   )}
                   style={{
                     // @ts-expect-error css var
@@ -138,7 +138,7 @@ export function Window(props: Props) {
 
                 className="bottom-0 right-0 absolute aspect-square w-[clamp(1.9rem,5%,3rem)] cursor-nwse-resize z-20"
                 style={{ transform: 'rotate(-90deg) translateX(-13%) translateY(13%)' }}
-                transformTemplate={() => `rotate(-90deg) translateX(-13%) translateY(13%)`}
+                transformTemplate={() => 'rotate(-90deg) translateX(-13%) translateY(13%)'}
 
                 initial={{ opacity: 0 }}
                 whileHover={{ opacity: 1 }}
@@ -166,7 +166,7 @@ export function Window(props: Props) {
             allow="autoplay; encrypted-media; fullscreen"
             allowFullScreen
             className={cn(
-              "absolute inset-0 w-full h-full aspect-video rounded-[inherit]",
+              'absolute inset-0 w-full h-full aspect-video rounded-[inherit]',
               { 'pointer-events-none': editing },
               { 'cursor-grabbing': mover.resizing }
             )}
