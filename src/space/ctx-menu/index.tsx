@@ -11,6 +11,7 @@ import {
 import { useWindows, type Window } from 'stores/useWindows';
 
 import { AddStreamItem } from './add-stream-item';
+import { RemoveFavoritesDialog } from './add-stream-item/remove-dialog';
 import { FullscreenItem } from './fullscreen-item';
 import { LayoutItem } from './layout-item';
 import { AddLayoutDialog } from './layout-item/add-dialog';
@@ -29,6 +30,7 @@ export function ContextMenu(props: Props) {
 
   const [addLayoutOpen, setAddLayoutOpen] = useState(false);
   const [removeLayoutsOpen, setRemoveLayoutsOpen] = useState(true);
+  const [removeFavoritesOpen, setRemoveFavoritesOpen] = useState(false);
 
   return (
     <>
@@ -41,7 +43,10 @@ export function ContextMenu(props: Props) {
             Editing Mode
           </ContextMenuCheckboxItem>
           <ContextMenuSeparator />
-          <AddStreamItem onAdd={onAdd} />
+          <AddStreamItem
+            onAdd={onAdd}
+            onRemove={() => setRemoveFavoritesOpen(true)}
+          />
           <LayoutItem
             onAdd={() => setAddLayoutOpen(true)}
             onRemove={() => setRemoveLayoutsOpen(true)}
@@ -60,6 +65,7 @@ export function ContextMenu(props: Props) {
       </SCNContextMenu>
       <AddLayoutDialog open={addLayoutOpen} setOpen={setAddLayoutOpen} />
       <RemoveLayoutsDialog open={removeLayoutsOpen} setOpen={setRemoveLayoutsOpen} />
+      <RemoveFavoritesDialog open={removeFavoritesOpen} setOpen={setRemoveFavoritesOpen} />
     </>
   );
 }

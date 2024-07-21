@@ -1,38 +1,37 @@
-import { MD5 } from 'crypto-js';
 import type { PropsWithChildren } from 'react';
 import { useState } from 'react';
 
 import { Button } from 'components/ui/button';
 import { Checkbox } from 'components/ui/checkbox';
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from 'components/ui/dialog';
-import type { Layout } from 'stores/useLayouts';
-import { useLayouts } from 'stores/useLayouts';
+import type { Favorite } from 'stores/useFavorites';
+import { useFavorites } from 'stores/useFavorites';
 
 type Props = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 } & PropsWithChildren;
 
-export function RemoveLayoutsDialog(props: Props) {
+export function RemoveFavoritesDialog(props: Props) {
   const { children, open, setOpen } = props;
 
-  const [selected, setSelected] = useState<Array<Layout['key']>>([]);
+  const [selected, setSelected] = useState<Array<Favorite['url']>>([]);
 
-  const layouts = useLayouts();
+  const favorites = useFavorites();
 
-  const toggleSelect = (key: Layout['key']) => {
+  const toggleSelect = (url: Favorite['url']) => {
     setSelected((prevSelected) => {
-      if (prevSelected.includes(key)) {
-        return prevSelected.filter((item) => item !== key);
+      if (prevSelected.includes(url)) {
+        return prevSelected.filter((item) => item !== url);
       } else {
-        return [...prevSelected, key];
+        return [...prevSelected, url];
       }
     });
   };
 
   const handleSubmit = () => {
     if (selected.length) {
-      layouts.removeMultiple(selected);
+      favorites.removeMultiple(selected);
       setOpen(false);
     }
   };
@@ -42,17 +41,17 @@ export function RemoveLayoutsDialog(props: Props) {
       {children}
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Select layouts to remove</DialogTitle>
+          <DialogTitle>Select favorites to remove</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 px-4 py-4 border bg-neutral-900 rounded border-neutral-700 ">
-          {layouts.list.map((layout) =>
+          {favorites.list.map((favorite) =>
             <div className="flex items-center space-x-2">
-              <Checkbox id={`layouts-${MD5(layout.key)}`} onCheckedChange={() => toggleSelect(layout.key)} />
+              <Checkbox id={`favorite-${favorite.url}`} onCheckedChange={() => toggleSelect(favorite.url)} />
               <label
-                htmlFor={`layouts-${MD5(layout.key)}`}
+                htmlFor={`favorite-${favorite.url}`}
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
-                {layout.name}
+                {favorite.name}
               </label>
             </div>
           )}

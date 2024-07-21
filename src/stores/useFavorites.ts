@@ -8,8 +8,9 @@ export type Favorite = {
 
 type FavoritesStore = {
   list: Array<Favorite>;
-  addFavorite: (f: Favorite) => void;
-  removeFavorite: (url: Favorite['url']) => void;
+  add: (f: Favorite) => void;
+  remove: (url: Favorite['url']) => void;
+  removeMultiple: (urls: Array<Favorite['url']>) => void;
 }
 
 export const useFavorites = create(
@@ -17,8 +18,9 @@ export const useFavorites = create(
     subscribeWithSelector<FavoritesStore>(
       (set) => ({
         list: [],
-        addFavorite: (favorite) => set((state) => ({ list: [...state.list, favorite] })),
-        removeFavorite: (url) => set((state) => ({ list: state.list.filter((item) => item.url !== url) })),
+        add: (favorite) => set((state) => ({ list: [...state.list, favorite] })),
+        remove: (url) => set((state) => ({ list: state.list.filter((item) => item.url !== url) })),
+        removeMultiple: (urls) => set((state) => ({ list: state.list.filter((item) => !urls.includes(item.url)) })),
       })
     ),
     { name: 'favorites' }

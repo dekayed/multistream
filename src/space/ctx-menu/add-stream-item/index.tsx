@@ -4,10 +4,11 @@ import type { Window } from 'stores/useWindows';
 
 type Props = {
   onAdd: (url?: Window['url']) => void;
+  onRemove: () => void;
 }
 
 export function AddStreamItem(props: Props) {
-  const { onAdd } = props;
+  const { onAdd, onRemove } = props;
 
   const favorites = useFavorites();
 
@@ -32,6 +33,14 @@ export function AddStreamItem(props: Props) {
             {f.name}
           </ContextMenuItem>
         ))}
+        {favorites.list.length > 0 && (
+          <>
+            <ContextMenuSeparator />
+            <ContextMenuItem onClick={onRemove} className="text-red-400 focus:text-red-400">
+              Remove Favorites...
+            </ContextMenuItem>
+          </>
+        )}
       </ContextMenuSubContent>
     </ContextMenuSub>
   );

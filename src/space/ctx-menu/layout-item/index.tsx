@@ -1,6 +1,6 @@
 import { useMatch, useNavigate } from 'react-router-dom';
 
-import { ContextMenuCheckboxItem, ContextMenuItem, ContextMenuSeparator, ContextMenuSub, ContextMenuSubContent, ContextMenuSubTrigger } from 'components/ui/context-menu';
+import { ContextMenuItem, ContextMenuSeparator, ContextMenuSub, ContextMenuSubContent, ContextMenuSubTrigger } from 'components/ui/context-menu';
 import { useLayouts } from 'stores/useLayouts';
 import { useWindows } from 'stores/useWindows';
 
@@ -32,9 +32,8 @@ export function LayoutItem(props: Props) {
         )}
         {windows.stack.length > 0 && <ContextMenuSeparator />}
         {layouts.list.map((layout) => (
-          <ContextMenuCheckboxItem
+          <ContextMenuItem
             key={layout.key}
-            checked={currentKey === layout.key}
             onClick={() => {
               if (currentKey !== layout.key) {
                 windows.stopEditing();
@@ -43,7 +42,7 @@ export function LayoutItem(props: Props) {
             }}
           >
             {layout.name}
-          </ContextMenuCheckboxItem>
+          </ContextMenuItem>
         ))}
         {layouts.list.length > 0 && (
           <>
