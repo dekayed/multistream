@@ -70,8 +70,8 @@ export function Window(props: Props) {
       showResetResize={mover.resized}
       isFavorite={isFavorite}
       url={url}
-      addFavorite={(name) => favorites.addFavorite({ name, url })}
-      removeFavorite={() => favorites.removeFavorite(url)}
+      addFavorite={(name) => favorites.add({ name, url })}
+      removeFavorite={() => favorites.remove(url)}
       onSnapToCenter={mover.snapToCenter}
       onResetResize={mover.resetResize}
       onRemove={() => windows.remove(id)}
