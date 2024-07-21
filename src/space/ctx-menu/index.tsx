@@ -29,7 +29,7 @@ export function ContextMenu(props: Props) {
   const windows = useWindows();
 
   const [addLayoutOpen, setAddLayoutOpen] = useState(false);
-  const [removeLayoutsOpen, setRemoveLayoutsOpen] = useState(true);
+  const [removeLayoutsOpen, setRemoveLayoutsOpen] = useState(false);
   const [removeFavoritesOpen, setRemoveFavoritesOpen] = useState(false);
 
   return (
