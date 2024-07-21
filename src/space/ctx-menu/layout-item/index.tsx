@@ -13,6 +13,8 @@ export function LayoutItem() {
 
   const currentKey = match?.params.encKey;
 
+  if (!windows.stack.length && !layouts.list.length) return null;
+
   return (
     <ContextMenuSub>
       <ContextMenuSubTrigger inset>Layout</ContextMenuSubTrigger>
