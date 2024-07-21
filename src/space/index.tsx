@@ -1,11 +1,11 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
-import { getHost } from 'parsers';
 import { useWindows } from 'stores/useWindows';
 
 import { ContextMenu } from './ctx-menu';
 import { Empty } from './empty';
+import { useTheme } from './useTheme';
 import { Window } from './window';
 
 export function Space() {
@@ -13,13 +13,7 @@ export function Space() {
 
   const boundariesRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (windows.stack.every((w) => getHost(w.url) === 'twitch' || getHost(w.url) === 'twitch-chat')) {
-      document.body.classList.add('twitch');
-      return;
-    }
-    document.body.classList.remove('twitch');
-  }, [windows.stack]);
+  useTheme();
 
   return (
     <motion.div

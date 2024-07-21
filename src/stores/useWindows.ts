@@ -1,7 +1,7 @@
 import AES from 'crypto-js/aes';
 import utf8 from 'crypto-js/enc-utf8';
-import { create } from 'zustand';
-import { persist, subscribeWithSelector } from 'zustand/middleware';
+import { useState } from 'react';
+import { useMatch } from 'react-router-dom';
 
 import { router } from 'router';
 
@@ -21,44 +21,38 @@ export class Window {
   }
 }
 
-type WindowsStore = {
-  stack: Array<Window>;
-  editing: boolean;
-  create: (window: Partial<Window>) => void;
-  update: (id: Window['id'], params: Partial<Window>) => void;
-  remove: (id: Window['id']) => void;
-  putOnTop: (id: Window['id']) => void;
-  toggleEditing: () => void;
-};
+export function useWindows() {
+  const match = useMatch('/:encKey');
 
-export const useWindows = create(
-  persist(
-    subscribeWithSelector<WindowsStore>(
-      (set) => ({
-        stack: [] as Array<Window>,
-        editing: false,
-        create: (window) => set((state) => ({ stack: [...state.stack, { ...new Window(''), ...window }] })),
-        update: (id, params) => set((state) => ({ stack: state.stack.map((media) => media.id === id ? ({ ...media, ...params }) : media) })),
-        remove: (id) => set((state) => ({ stack: state.stack.filter((media) => media.id !== id) })),
-        putOnTop: (id) => set((state) => ({ stack: state.stack.sort((a, b) => a.id === id ? 1 : b.id === id ? -1 : 0) })),
-        toggleEditing: () => set((state) => ({ editing: !state.editing })),
-      })
-    ),
-    {
-      name: 'windows',
-      storage: {
-        getItem: () => {
-          const url = new URL(location.href);
-          const enc = url.pathname.slice(1);
-          const stack = enc.length ? JSON.parse(AES.decrypt(decodeURIComponent(enc), secret).toString(utf8)) : [];
-          return { state: { stack } };
-        },
-        setItem: (_, value) => {
-          const encrypted = value.state.stack.length ? AES.encrypt(JSON.stringify(value.state.stack), secret).toString() : '';
-          router.navigate(`/${encodeURIComponent(encrypted)}`);
-        },
-        removeItem: () => router.navigate(''),
-      },
-    }
-  ),
-);
+  const stack = (match?.params.encKey?.length
+    ? JSON.parse(AES.decrypt(decodeURIComponent(match?.params.encKey), secret).toString(utf8))
+    : []) as Array<Window>;
+
+  const [editing, setEditing] = useState(false);
+
+  const setStack = (stack: Array<Window>) => {
+    const encrypted = stack.length ? AES.encrypt(JSON.stringify(stack), secret).toString() : '';
+    router.navigate(`/${encodeURIComponent(encrypted)}`);
+  };
+
+  const create = (window: Partial<Window>) => setStack([...stack, { ...new Window(''), ...window }]);
+  const update = (id: Window['id'], params: Partial<Window>) => setStack(stack.map((window) => window.id === id ? ({ ...window, ...params }) : window));
+  const remove = (id: Window['id']) => setStack(stack.filter((window) => window.id !== id));
+  const putOnTop = (id: Window['id']) => {
+    if (stack.findIndex((window) => window.id === id) === -1) return;
+    if (stack.length === 1) return;
+    if (stack.findIndex((window) => window.id === id) === stack.length - 1) return;
+    setStack(stack.sort((a, b) => a.id === id ? 1 : b.id === id ? -1 : 0));
+  };
+  const toggleEditing = () => setEditing(!editing);
+
+  return {
+    stack,
+    editing,
+    create,
+    update,
+    remove,
+    putOnTop,
+    toggleEditing,
+  };
+}
