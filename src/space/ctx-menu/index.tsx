@@ -6,8 +6,9 @@ import {
   ContextMenuContent,
   ContextMenuTrigger,
   ContextMenuSeparator,
+  ContextMenuItem,
 } from 'components/ui/context-menu';
-import type { Window } from 'stores/useWindows';
+import { useWindows, type Window } from 'stores/useWindows';
 
 import { AddStreamItem } from './add-stream-item';
 import { FullscreenItem } from './fullscreen-item';
@@ -23,6 +24,8 @@ type Props = {
 
 export function ContextMenu(props: Props) {
   const { onAdd, isEditing, toggleEditing } = props;
+
+  const windows = useWindows();
 
   const [addLayoutOpen, setAddLayoutOpen] = useState(false);
   const [removeLayoutsOpen, setRemoveLayoutsOpen] = useState(true);
@@ -45,6 +48,14 @@ export function ContextMenu(props: Props) {
           />
           <ContextMenuSeparator />
           <FullscreenItem />
+          {windows.stack.length > 0 && (
+            <>
+              <ContextMenuSeparator />
+              <ContextMenuItem inset onClick={windows.removeAll} className="text-red-400 focus:text-red-400 focus:bg-red-900">
+                Clear Space
+              </ContextMenuItem>
+            </>
+          )}
         </ContextMenuContent>
       </SCNContextMenu>
       <AddLayoutDialog open={addLayoutOpen} setOpen={setAddLayoutOpen} />
