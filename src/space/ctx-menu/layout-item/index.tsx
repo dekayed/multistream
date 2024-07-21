@@ -1,11 +1,17 @@
 import { useMatch, useNavigate } from 'react-router-dom';
 
 import { ContextMenuCheckboxItem, ContextMenuItem, ContextMenuSeparator, ContextMenuSub, ContextMenuSubContent, ContextMenuSubTrigger } from 'components/ui/context-menu';
-import { DialogTrigger } from 'components/ui/dialog';
 import { useLayouts } from 'stores/useLayouts';
 import { useWindows } from 'stores/useWindows';
 
-export function LayoutItem() {
+type Props = {
+  onAdd: () => void;
+  onRemove: () => void;
+}
+
+export function LayoutItem(props: Props) {
+  const { onAdd, onRemove } = props;
+
   const match = useMatch('/:encKey');
   const windows = useWindows();
   const layouts = useLayouts();
@@ -20,13 +26,11 @@ export function LayoutItem() {
       <ContextMenuSubTrigger inset>Layout</ContextMenuSubTrigger>
       <ContextMenuSubContent>
         {windows.stack.length > 0 && (
-          <DialogTrigger asChild>
-            <ContextMenuItem>
-              Save
-            </ContextMenuItem>
-          </DialogTrigger>
+          <ContextMenuItem onClick={onAdd}>
+            Save...
+          </ContextMenuItem>
         )}
-        {layouts.list.length > 0 && <ContextMenuSeparator />}
+        {windows.stack.length > 0 && <ContextMenuSeparator />}
         {layouts.list.map((layout) => (
           <ContextMenuCheckboxItem
             key={layout.key}
@@ -41,6 +45,14 @@ export function LayoutItem() {
             {layout.name}
           </ContextMenuCheckboxItem>
         ))}
+        {layouts.list.length > 0 && (
+          <>
+            <ContextMenuSeparator />
+            <ContextMenuItem onClick={onRemove} className="text-red-400 focus:text-red-400">
+              Remove Layouts...
+            </ContextMenuItem>
+          </>
+        )}
       </ContextMenuSubContent>
     </ContextMenuSub>
   );

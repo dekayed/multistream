@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import {
   ContextMenu as SCNContextMenu,
   ContextMenuCheckboxItem,
@@ -10,7 +12,8 @@ import type { Window } from 'stores/useWindows';
 import { AddStreamItem } from './add-stream-item';
 import { FullscreenItem } from './fullscreen-item';
 import { LayoutItem } from './layout-item';
-import { LayoutDialog } from './layout-item/dialog';
+import { AddLayoutDialog } from './layout-item/add-dialog';
+import { RemoveLayoutsDialog } from './layout-item/remove-dialog';
 
 type Props = {
   onAdd: (url?: Window['url']) => void;
@@ -21,8 +24,11 @@ type Props = {
 export function ContextMenu(props: Props) {
   const { onAdd, isEditing, toggleEditing } = props;
 
+  const [addLayoutOpen, setAddLayoutOpen] = useState(false);
+  const [removeLayoutsOpen, setRemoveLayoutsOpen] = useState(true);
+
   return (
-    <LayoutDialog>
+    <>
       <SCNContextMenu>
         <ContextMenuTrigger>
           <div className="w-full h-full absolute inset-0 z-0" />
@@ -33,11 +39,16 @@ export function ContextMenu(props: Props) {
           </ContextMenuCheckboxItem>
           <ContextMenuSeparator />
           <AddStreamItem onAdd={onAdd} />
-          <LayoutItem />
+          <LayoutItem
+            onAdd={() => setAddLayoutOpen(true)}
+            onRemove={() => setRemoveLayoutsOpen(true)}
+          />
           <ContextMenuSeparator />
           <FullscreenItem />
         </ContextMenuContent>
       </SCNContextMenu>
-    </LayoutDialog>
+      <AddLayoutDialog open={addLayoutOpen} setOpen={setAddLayoutOpen} />
+      <RemoveLayoutsDialog open={removeLayoutsOpen} setOpen={setRemoveLayoutsOpen} />
+    </>
   );
 }

@@ -8,10 +8,13 @@ import { Input } from 'components/ui/input';
 import { Label } from 'components/ui/label';
 import { useLayouts } from 'stores/useLayouts';
 
-export function LayoutDialog(props: PropsWithChildren) {
-  const { children } = props;
+type Props = {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+} & PropsWithChildren;
 
-  const [open, setOpen] = useState(false);
+export function AddLayoutDialog(props: Props) {
+  const { children, open, setOpen } = props;
 
   const [name, setName] = useState('');
   const match = useMatch('/:encKey');

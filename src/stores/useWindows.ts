@@ -37,6 +37,7 @@ export function useWindows() {
   const create = (window: Partial<Window>) => setStack([...stack, { ...new Window(''), ...window }]);
   const update = (id: Window['id'], params: Partial<Window>) => setStack(stack.map((window) => window.id === id ? ({ ...window, ...params }) : window));
   const remove = (id: Window['id']) => setStack(stack.filter((window) => window.id !== id));
+  const removeAll = () => setStack([]);
   const putOnTop = (id: Window['id']) => {
     if (stack.findIndex((window) => window.id === id) === -1) return;
     if (stack.length === 1) return;
@@ -52,6 +53,7 @@ export function useWindows() {
     create,
     update,
     remove,
+    removeAll,
     putOnTop,
     toggleEditing,
     stopEditing,

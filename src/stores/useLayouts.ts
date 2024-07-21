@@ -10,6 +10,7 @@ type LayoutsStore = {
   list: Array<Layout>;
   add: (f: Layout) => void;
   remove: (key: Layout['key']) => void;
+  removeMultiple: (keys: Array<Layout['key']>) => void;
 }
 
 export const useLayouts = create(
@@ -19,6 +20,7 @@ export const useLayouts = create(
         list: [],
         add: (layout) => set((state) => ({ list: [...state.list, layout] })),
         remove: (key) => set((state) => ({ list: state.list.filter((item) => item.key !== key) })),
+        removeMultiple: (keys) => set((state) => ({ list: state.list.filter((item) => !keys.includes(item.key)) })),
       })
     ),
     { name: 'layouts' }
