@@ -68,10 +68,10 @@ export function AddFavoriteDialog(props: Props) {
         <DialogFooter>
           {name.length ? (
             <DialogClose>
-              <Button onClick={handleSubmit}>Save changes</Button>
+              <Button onClick={handleSubmit}>Add to Favorites</Button>
             </DialogClose>
           ) : (
-            <Button disabled>Save changes</Button>
+            <Button disabled>Add to Favorites</Button>
           )}
         </DialogFooter>
       </DialogContent>

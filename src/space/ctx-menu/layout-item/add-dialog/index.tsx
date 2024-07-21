@@ -53,10 +53,10 @@ export function AddLayoutDialog(props: Props) {
         <DialogFooter>
           {name.length ? (
             <DialogClose>
-              <Button onClick={handleSubmit}>Save changes</Button>
+              <Button onClick={handleSubmit}>Add to Layouts</Button>
             </DialogClose>
           ) : (
-            <Button disabled>Save changes</Button>
+            <Button disabled>Add to Layouts</Button>
           )}
         </DialogFooter>
       </DialogContent>
