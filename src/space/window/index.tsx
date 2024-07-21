@@ -67,13 +67,11 @@ export function Window(props: Props) {
 
   return (
     <ContextMenu
-      showResetResize={mover.resized}
       isFavorite={isFavorite}
       url={url}
       addFavorite={(name) => favorites.add({ name, url })}
       removeFavorite={() => favorites.remove(url)}
       onSnapToCenter={mover.snapToCenter}
-      onResetResize={mover.resetResize}
       onRemove={() => windows.remove(id)}
       aspectRatioLocked={mover.aspectRatioLocked}
       onToggleAspectRatioLock={mover.toggleLockAspectRatio}

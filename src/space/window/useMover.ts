@@ -109,24 +109,6 @@ export function useMover(props: Props) {
     windows.update(id, removeEmpty({ x, y, width, height }));
   };
 
-  const resetResize = async () => {
-    const boundariesRect = getBoundariesRect();
-    const lowVerticalSpace = boundariesRect.height < (boundariesRect.width / 16 * 9);
-
-    controls.set({
-      width: lowVerticalSpace ? 'auto' : '85%',
-      height: lowVerticalSpace ? '85%' : 'auto'
-    });
-
-    controls.set({
-      x: (boundariesRect.width - ref.current!.getBoundingClientRect().width) / 2,
-      y: (boundariesRect.height - ref.current!.getBoundingClientRect().height) / 2
-    });
-
-    setAspectRatioLocked(true);
-    setResized(false);
-  };
-
   // Set initial window position and size
   useEffect(() => {
     if (resized) return;
@@ -220,7 +202,6 @@ export function useMover(props: Props) {
     onDragEnd,
     resized,
     resizing,
-    resetResize,
     snapToCenter,
     aspectRatioLocked,
     toggleLockAspectRatio: () => setAspectRatioLocked((locked) => !locked),

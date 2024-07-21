@@ -11,13 +11,11 @@ import { useWindows } from 'stores/useWindows';
 import { AddFavoriteDialog } from './add-favorite';
 
 type Props = {
-  showResetResize: boolean;
   isFavorite: boolean;
   url: Favorite['url'];
   addFavorite: (name: Favorite['name']) => void;
   removeFavorite: () => void;
   onSnapToCenter: () => void;
-  onResetResize: () => void;
   onRemove: () => void;
   aspectRatioLocked?: boolean;
   onToggleAspectRatioLock?: () => void;
@@ -25,7 +23,7 @@ type Props = {
 
 export function ContextMenu(props: Props) {
   const {
-    showResetResize, url, onSnapToCenter, onResetResize, isFavorite,
+    url, onSnapToCenter, isFavorite,
     addFavorite, removeFavorite, onRemove, children,
     aspectRatioLocked, onToggleAspectRatioLock,
   } = props;
@@ -64,11 +62,6 @@ export function ContextMenu(props: Props) {
           <ContextMenuItem inset onClick={onSnapToCenter}>
             Snap to Center
           </ContextMenuItem>
-          {showResetResize && (
-            <ContextMenuItem inset onClick={onResetResize}>
-              Reset Size
-            </ContextMenuItem>
-          )}
           <ContextMenuItem inset onClick={onRemove} className="text-red-400 focus:text-red-400 focus:bg-red-900">
             Remove
           </ContextMenuItem>
