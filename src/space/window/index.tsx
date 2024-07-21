@@ -114,7 +114,7 @@ export function Window(props: Props) {
                     // @ts-expect-error css var
                     '--calc': `calc(12px * (var(--width) / 8) / ${inputValue?.length || 1})`,
                   }}
-                  onBlur={() => { console.log('blur'); windows.update(id, { url: inputValue }); }}
+                  onBlur={() => windows.update(id, { url: inputValue })}
                   onInput={(e) => {
                     if (e.currentTarget.innerText === '\n') { e.currentTarget.innerText = ''; }
                     setInputValue((e.currentTarget as HTMLDivElement | null)?.textContent || '');
@@ -122,7 +122,6 @@ export function Window(props: Props) {
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       e.currentTarget.blur();
-                      console.log('enter');
                       windows.update(id, { url: inputValue });
                     }
                   }}

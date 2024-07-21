@@ -17,8 +17,6 @@ export const getHost = (url: string) => {
         Array.from(url.matchAll(regex))[0]?.some((part) => part === url)
       )?.[0] as keyof typeof hosts | undefined;
 
-    console.log(url, hosts, result);
-
     return result;
   } catch { return; }
 };
