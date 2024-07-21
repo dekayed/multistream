@@ -1,14 +1,14 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter } from 'react-router-dom';
 
-import { Space } from "space";
+import { Space } from 'space';
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <Space />,
   },
   {
-    path: "/:encKey",
+    path: '/:encKey',
     element: <Space />,
   },
 ]);

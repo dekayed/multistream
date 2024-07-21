@@ -1,5 +1,5 @@
-import { create } from "zustand";
-import { persist, subscribeWithSelector } from "zustand/middleware";
+import { create } from 'zustand';
+import { persist, subscribeWithSelector } from 'zustand/middleware';
 
 export type Favorite = {
   name: string;
@@ -16,13 +16,13 @@ export const useFavorites = create(
   persist(
     subscribeWithSelector<FavoritesStore>(
       (set) => ({
-        list: JSON.parse(localStorage.getItem("favorites") || '[]'),
+        list: JSON.parse(localStorage.getItem('favorites') || '[]'),
         addFavorite: (favorite) => set((state) => ({ list: [...state.list, favorite] })),
         removeFavorite: (url) => set((state) => ({ list: state.list.filter((item) => item.url !== url) })),
       })
     ),
     {
-      name: "favorites"
+      name: 'favorites'
     }
   )
 );

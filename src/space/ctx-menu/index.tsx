@@ -4,11 +4,11 @@ import {
   ContextMenuContent,
   ContextMenuTrigger,
   ContextMenuSeparator,
-} from "components/ui/context-menu";
-import { Window } from "useWindows";
+} from 'components/ui/context-menu';
+import { Window } from 'useWindows';
 
-import { AddStreamItem } from "./add-stream-item";
-import { FullscreenItem } from "./fullscreen-item";
+import { AddStreamItem } from './add-stream-item';
+import { FullscreenItem } from './fullscreen-item';
 
 type Props = {
   onAdd: (url?: Window['url']) => void;

@@ -1,8 +1,8 @@
-import { PanInfo, useAnimationControls } from "framer-motion";
-import { RefObject, useCallback, useEffect, useRef, useState } from "react";
+import { PanInfo, useAnimationControls } from 'framer-motion';
+import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 
-import { useWindows, Window } from "useWindows";
-import { removeEmpty } from "utils";
+import { useWindows, Window } from 'useWindows';
+import { removeEmpty } from 'utils';
 
 type Props = {
   id: Window['id'];

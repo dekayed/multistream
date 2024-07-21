@@ -1,7 +1,7 @@
 
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren, useState } from 'react';
 
-import { Button } from "components/ui/button";
+import { Button } from 'components/ui/button';
 import {
   Dialog,
   DialogClose,
@@ -9,10 +9,10 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "components/ui/dialog";
-import { Input } from "components/ui/input";
-import { Label } from "components/ui/label";
-import { Favorite } from "useFavorites";
+} from 'components/ui/dialog';
+import { Input } from 'components/ui/input';
+import { Label } from 'components/ui/label';
+import { Favorite } from 'useFavorites';
 
 type Props = {
   url: Favorite['url'];

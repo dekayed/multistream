@@ -1,9 +1,9 @@
-import AES from "crypto-js/aes";
-import utf8 from "crypto-js/enc-utf8";
-import { create } from "zustand";
-import { subscribeWithSelector } from "zustand/middleware";
+import AES from 'crypto-js/aes';
+import utf8 from 'crypto-js/enc-utf8';
+import { create } from 'zustand';
+import { subscribeWithSelector } from 'zustand/middleware';
 
-import { router } from "router";
+import { router } from 'router';
 
 const secret = 'secret';
 
