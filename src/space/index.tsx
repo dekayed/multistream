@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 
 import { getHost } from 'parsers';
-import { useWindows } from 'useWindows';
+import { useWindows } from 'stores/useWindows';
 
 import { ContextMenu } from './ctx-menu';
 import { Empty } from './empty';

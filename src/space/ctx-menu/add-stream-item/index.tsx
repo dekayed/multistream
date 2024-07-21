@@ -1,6 +1,6 @@
 import { ContextMenuItem, ContextMenuSeparator, ContextMenuSub, ContextMenuSubContent, ContextMenuSubTrigger } from 'components/ui/context-menu';
-import { useFavorites } from 'useFavorites';
-import type { Window } from 'useWindows';
+import { useFavorites } from 'stores/useFavorites';
+import type { Window } from 'stores/useWindows';
 
 type Props = {
   onAdd: (url?: Window['url']) => void;

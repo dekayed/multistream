@@ -30,13 +30,11 @@ module.exports = {
         'index',
       ]
     }],
+    "@typescript-eslint/consistent-type-imports": "warn",
   },
   settings: {
     'import/resolver': {
       "typescript": true
     },
-    // 'import/parsers': {
-    //   '@typescript-eslint/parser': ['.ts', '.tsx']
-    // },
   }
 }

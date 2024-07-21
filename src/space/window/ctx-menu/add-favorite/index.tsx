@@ -1,5 +1,6 @@
 
-import { PropsWithChildren, useState } from 'react';
+import type { PropsWithChildren } from 'react';
+import { useState } from 'react';
 
 import { Button } from 'components/ui/button';
 import {
@@ -12,7 +13,7 @@ import {
 } from 'components/ui/dialog';
 import { Input } from 'components/ui/input';
 import { Label } from 'components/ui/label';
-import { Favorite } from 'useFavorites';
+import type { Favorite } from 'stores/useFavorites';
 
 type Props = {
   url: Favorite['url'];

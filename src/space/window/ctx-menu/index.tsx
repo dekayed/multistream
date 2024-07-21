@@ -1,12 +1,12 @@
-import { PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
 
 import { ContextMenu as SCNContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger, ContextMenuCheckboxItem, ContextMenuSeparator } from 'components/ui/context-menu';
 import { DialogTrigger } from 'components/ui/dialog';
 import { getHost } from 'parsers';
 import { getChatUrl } from 'parsers/twitch';
 import twitchChatParser from 'parsers/twitch-chat';
-import { Favorite } from 'useFavorites';
-import { useWindows } from 'useWindows';
+import type { Favorite } from 'stores/useFavorites';
+import { useWindows } from 'stores/useWindows';
 
 import { AddFavoriteDialog } from './add-favorite';
 

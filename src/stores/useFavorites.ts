@@ -16,13 +16,11 @@ export const useFavorites = create(
   persist(
     subscribeWithSelector<FavoritesStore>(
       (set) => ({
-        list: JSON.parse(localStorage.getItem('favorites') || '[]'),
+        list: [],
         addFavorite: (favorite) => set((state) => ({ list: [...state.list, favorite] })),
         removeFavorite: (url) => set((state) => ({ list: state.list.filter((item) => item.url !== url) })),
       })
     ),
-    {
-      name: 'favorites'
-    }
+    { name: 'favorites' }
   )
 );

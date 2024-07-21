@@ -5,7 +5,7 @@ import {
   ContextMenuTrigger,
   ContextMenuSeparator,
 } from 'components/ui/context-menu';
-import { Window } from 'useWindows';
+import type { Window } from 'stores/useWindows';
 
 import { AddStreamItem } from './add-stream-item';
 import { FullscreenItem } from './fullscreen-item';

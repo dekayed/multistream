@@ -1,10 +1,11 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
-import { RefObject, useEffect, useRef, useState } from 'react';
+import type { RefObject } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 
-import { useFavorites } from 'useFavorites';
-import { useWindows, type Window as WindowType } from 'useWindows';
+import { useFavorites } from 'stores/useFavorites';
+import { useWindows, type Window as WindowType } from 'stores/useWindows';
 import { cn } from 'utils';
 
 import { ContextMenu } from './ctx-menu';
