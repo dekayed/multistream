@@ -1,9 +1,7 @@
 import AES from 'crypto-js/aes';
 import utf8 from 'crypto-js/enc-utf8';
 import { useState } from 'react';
-import { useMatch } from 'react-router-dom';
-
-import { router } from 'router';
+import { useMatch, useNavigate } from 'react-router-dom';
 
 const secret = 'secret';
 
@@ -23,6 +21,7 @@ export class Window {
 
 export function useWindows() {
   const match = useMatch('/:encKey');
+  const navigate = useNavigate();
 
   const stack = (match?.params.encKey?.length
     ? JSON.parse(AES.decrypt(decodeURIComponent(match?.params.encKey), secret).toString(utf8))
@@ -32,7 +31,7 @@ export function useWindows() {
 
   const setStack = (stack: Array<Window>) => {
     const encrypted = stack.length ? AES.encrypt(JSON.stringify(stack), secret).toString() : '';
-    router.navigate(`/${encodeURIComponent(encrypted)}`);
+    navigate(`/${encodeURIComponent(encrypted)}`);
   };
 
   const create = (window: Partial<Window>) => setStack([...stack, { ...new Window(''), ...window }]);
@@ -45,6 +44,7 @@ export function useWindows() {
     setStack(stack.sort((a, b) => a.id === id ? 1 : b.id === id ? -1 : 0));
   };
   const toggleEditing = () => setEditing(!editing);
+  const stopEditing = () => setEditing(false);
 
   return {
     stack,
@@ -54,5 +54,6 @@ export function useWindows() {
     remove,
     putOnTop,
     toggleEditing,
+    stopEditing,
   };
 }
