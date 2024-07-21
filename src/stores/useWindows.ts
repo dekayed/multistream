@@ -44,6 +44,7 @@ export function useWindows() {
     if (stack.findIndex((window) => window.id === id) === stack.length - 1) return;
     setStack(stack.sort((a, b) => a.id === id ? 1 : b.id === id ? -1 : 0));
   };
+  const enableEditing = () => setEditing(true);
   const toggleEditing = () => setEditing(!editing);
   const stopEditing = () => setEditing(false);
 
@@ -55,6 +56,7 @@ export function useWindows() {
     remove,
     removeAll,
     putOnTop,
+    enableEditing,
     toggleEditing,
     stopEditing,
   };

@@ -24,7 +24,10 @@ export function Space() {
       exit={{ opacity: 0 }}
     >
       <ContextMenu
-        onAdd={(url) => windows.create({ url })}
+        onAdd={(url) => {
+          windows.create({ url });
+          if (!url) { windows.enableEditing(); }
+        }}
         isEditing={windows.editing}
         toggleEditing={windows.toggleEditing}
       />

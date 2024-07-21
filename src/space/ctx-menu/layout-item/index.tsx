@@ -30,7 +30,7 @@ export function LayoutItem(props: Props) {
             Save...
           </ContextMenuItem>
         )}
-        {windows.stack.length > 0 && <ContextMenuSeparator />}
+        {windows.stack.length > 0 && layouts.list.length > 0 && <ContextMenuSeparator />}
         {layouts.list.map((layout) => (
           <ContextMenuItem
             key={layout.key}
