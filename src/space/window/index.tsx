@@ -1,7 +1,7 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import type { RefObject } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 
 import { useFavorites } from 'stores/useFavorites';
@@ -35,6 +35,16 @@ export function Window(props: Props) {
   const { src } = useSrc({ url });
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  const iframe = useMemo(() => src ? (
+    <iframe
+      ref={iframeRef}
+      src={src}
+      allow="autoplay; encrypted-media; fullscreen"
+      allowFullScreen
+      className="absolute inset-0 w-full h-full aspect-video rounded-[inherit]"
+    />
+  ) : null, [src]);
 
   useEffect(() => {
     if (!windowRef.current) return;
@@ -166,15 +176,7 @@ export function Window(props: Props) {
           )}
         </AnimatePresence>
 
-        {src && (
-          <iframe
-            ref={iframeRef}
-            src={src}
-            allow="autoplay; encrypted-media; fullscreen"
-            allowFullScreen
-            className="absolute inset-0 w-full h-full aspect-video rounded-[inherit]"
-          />
-        )}
+        {iframe}
       </motion.div>
     </ContextMenu>
 
