@@ -34,6 +34,8 @@ export function Window(props: Props) {
   const mover = useMover({ id, boundaries, zIndex, ref: windowRef });
   const { src } = useSrc({ url });
 
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
   useEffect(() => {
     if (!windowRef.current) return;
     const observer = new ResizeObserver(([entry]) => {
@@ -48,6 +50,12 @@ export function Window(props: Props) {
     if (!inputRef.current) return;
     if (editing && !isFavorite) { inputRef.current.textContent = inputValue; }
   }, [editing]);
+
+  useEffect(() => {
+    if (!iframeRef.current) return;
+    iframeRef.current.classList.toggle('pointer-events-none', editing);
+    iframeRef.current.classList.toggle('cursor-grabbing', mover.resizing);
+  }, [editing, mover.resizing]);
 
   useEffect(() => {
     if (!inputRef.current) return;
@@ -160,14 +168,11 @@ export function Window(props: Props) {
 
         {src && (
           <iframe
+            ref={iframeRef}
             src={src}
             allow="autoplay; encrypted-media; fullscreen"
             allowFullScreen
-            className={cn(
-              'absolute inset-0 w-full h-full aspect-video rounded-[inherit]',
-              { 'pointer-events-none': editing },
-              { 'cursor-grabbing': mover.resizing }
-            )}
+            className="absolute inset-0 w-full h-full aspect-video rounded-[inherit]"
           />
         )}
       </motion.div>
