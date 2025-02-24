@@ -10,12 +10,12 @@ import { removeEmpty } from 'utils';
 type Props = {
   id: Window['id'];
   boundaries: RefObject<HTMLDivElement>;
-  zIndex?: number;
+  zIndex: number;
   ref: RefObject<HTMLDivElement>;
 };
 
 export function useMover(props: Props) {
-  const { id, boundaries, zIndex = 0, ref } = props;
+  const { id, boundaries, zIndex, ref } = props;
 
   const [resized, setResized] = useState(false);
   const [resizing, setResizing] = useState(false);

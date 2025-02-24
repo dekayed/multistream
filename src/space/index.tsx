@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 
 import { useWindows } from 'stores/useWindows';
 
@@ -14,6 +14,10 @@ export function Space() {
   const boundariesRef = useRef<HTMLDivElement>(null);
 
   useTheme();
+
+  // elements are recreated when moving around the dom (iframes are reloaded)
+  // so the order of windows in dom needs to be persistent (sorting by id here)
+  const persistentStack = useMemo(() => windows.stack.map((w, i) => ({ ...w, zIndex: i })).toSorted((a, b) => a.id < b.id ? -1 : 1), [windows.stack]);
 
   return (
     <motion.div
@@ -32,7 +36,7 @@ export function Space() {
         toggleEditing={windows.toggleEditing}
       />
       <AnimatePresence>
-        {windows.stack.length ? windows.stack.map((window) => (
+        {persistentStack.length ? persistentStack.map((window) => (
           <Window
             key={window.id}
             boundaries={boundariesRef}

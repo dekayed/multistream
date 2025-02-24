@@ -16,12 +16,12 @@ import { useSrc } from './useSrc';
 
 type Props = {
   boundaries: RefObject<HTMLDivElement>;
-  zIndex?: number;
+  zIndex: number;
   editing?: boolean;
 } & WindowType;
 
 export function Window(props: Props) {
-  const { id, url, boundaries, zIndex = 0, editing } = props;
+  const { id, url, boundaries, zIndex, editing } = props;
 
   const [inputValue, setInputValue] = useState(url);
 
